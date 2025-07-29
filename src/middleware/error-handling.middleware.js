@@ -2,8 +2,6 @@ import { ErrorClass } from "../utils/index.js";
 export const errorHandler = (API) => {
   return (req, res, next) => {
     API(req, res, next)?.catch((err) => {
-      console.log("Error in API: ", err);
-      
       next(new ErrorClass("Internal Server error", 500, err?.message));
     });
   };

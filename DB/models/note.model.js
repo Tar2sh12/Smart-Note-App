@@ -10,10 +10,7 @@ const noteSchema = new Schema(
       type: String,
       required: true,
     },
-    summary: {
-      type: String,
-    },
-    onwerId: {
+    ownerId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,

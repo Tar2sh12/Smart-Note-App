@@ -26,8 +26,6 @@ export class ApiFeature {
       select:this.select ? this.select : "-__v -createdAt -updatedAt",
     };
 
-    // console.log('============ paginationObject in pagination() ==========', this.paginationObject);
-
     this.mongooseQuery = this.model.paginate(this.filterObject, {
       ...this.paginationObject,
       populate: this.populate,
@@ -40,8 +38,7 @@ export class ApiFeature {
     const { sort } = this.query;
     if (sort) {
       this.paginationObject.sort = JSON.parse(sort);
-      //console.log('============ paginationObject in sort() ==========', this.paginationObject);
-
+ 
       this.mongooseQuery = this.model.paginate(this.filterObject, {
         ...this.paginationObject,
         populate: this.populate,
@@ -88,7 +85,6 @@ export class ApiFeature {
   // Populate
   populateFields() {
     if (this.populate.length > 0) {
-      // console.log('============ populate settings in populateFields() ==========', this.populate);
 
       this.mongooseQuery = this.model.paginate(this.filterObject, {
         ...this.paginationObject,
