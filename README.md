@@ -29,6 +29,11 @@ A comprehensive Note Management System built with Node.js and Express, featuring
 - **Error Handling** with comprehensive middleware
 - **Environment Configuration** with dotenv
 
+
+### Postman documentation
+- **RestAPIs** [https://documenter.getpostman.com/view/34540021/2sB3B7PZhH]
+- **GraphQl** [https://teama5-3842.postman.co/workspace/My-Workspace~179abe1a-3471-4ddf-8d30-8b64b9efa42d/collection/66f374d6438de12ae85d7454?action=share&creator=34540021&active-environment=34540021-eb9fa7a7-157d-4cd7-a469-42b29d39e824]
+
 ## 🛠 Technology Stack
 
 - **Backend**: Node.js, Express.js
