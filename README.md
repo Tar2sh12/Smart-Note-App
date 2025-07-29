@@ -90,6 +90,7 @@ A comprehensive Note Management System built with Node.js and Express, featuring
    TWITTER=""
    
    GEMINI_API_KEY=""
+   MODEL_TYPE=""
    ```
 
 4. **Start the server**
