@@ -111,4 +111,3 @@ A comprehensive Note Management System built with Node.js and Express, featuring
 - **Modular Architecture** for maintainable code
 - **Clean Code Principles** implementation
 ---
-**Built with ❤️ by Mohamed Tarek**
