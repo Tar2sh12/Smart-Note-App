@@ -1,6 +1,15 @@
 import { Note } from "../../../DB/models/index.js";
 import { validate, isAuthQL } from "../Middlewares/index.js";
 import { paginationNoteSchema } from "../validators/note.validator.js";
+
+/**
+ * @param {object} args
+ * @param {object} parent
+ * @returns return response [{note}]
+ * @description apply authentication middleware to check if the user is authenticated
+ * @description validate the encoming args
+ * @description get all notes with paginated and filtered
+ */
 export const getAllNotes = async (parent, args) => {
   //apply authentication middleware to check if the user is authenticated
   const authUser = await isAuthQL(args.token);

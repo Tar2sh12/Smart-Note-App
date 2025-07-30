@@ -63,6 +63,14 @@ export const SignUp = async (req, res, next) => {
   return successResponse(res, userInstance, "user created ", 201);
 };
 
+
+/**
+ * @param {object} req
+ * @param {object} res
+ * @param {object} next
+ * @returns return response {data ,message, statusCode}
+ * @description verify email by confirmation token
+ */
 export const verifyEmail = async (req, res, next) => {
   const { confirmationToken } = req.params;
   const user = jwt.verify(confirmationToken, process.env.CONFIRM_TOKEN).user;
@@ -84,7 +92,7 @@ export const verifyEmail = async (req, res, next) => {
  * @param {object} req
  * @param {object} res
  * @param {object} next
- * @returns return response {message, token}
+ * @returns return response {data ,message, statusCode}
  * @description login user
  */
 
@@ -201,6 +209,14 @@ export const signOutService = async (req, res, next) => {
 };
 
 
+
+/**
+ * @param {object} req
+ * @param {object} res
+ * @param {object} next
+ * @returns return response {data ,message, statusCode}
+ * @description sending otp to user email to reset password
+ */
 export const forgetPassowrdService = async (req, res, next) => {
   const {email} = req.body;
   const user = await User.findOne({email});
@@ -223,7 +239,13 @@ export const forgetPassowrdService = async (req, res, next) => {
 };
 
 
-
+/**
+ * @param {object} req
+ * @param {object} res
+ * @param {object} next
+ * @returns return response {data ,message, statusCode}
+ * @description recieve otp and new password to reset password
+ */
 export const resetPasswordService = async (req, res, next) => {
   const {email , otp , password} = req.body;
   const user = await User.findOne({email});

@@ -15,7 +15,7 @@ import fs from "fs";
  * @param {object} req
  * @param {object} res
  * @param {object} next
- * @returns return response { user}
+ * @returns return response {data ,message, statusCode}
  * @description get user information
  */
 export const getInfo = async (req, res, next) => {
@@ -41,7 +41,7 @@ export const getInfo = async (req, res, next) => {
  * @param {object} req
  * @param {object} res
  * @param {object} next
- * @returns return response [{user}]
+ * @returns return response {data ,message, statusCode}
  * @description get all users except current user
  */
 export const getAllUsers = async (req, res, next) => {
