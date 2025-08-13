@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { systemRoles } from "../../src/utils/index.js";
-import { hashSync, compareSync } from "bcrypt";
+import { hashSync } from "bcrypt";
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema(
@@ -30,7 +30,8 @@ const userSchema = new Schema(
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "User",
-    },
+    }, // What is this ?
+
     isEmailVerified: {
       type: Boolean,
       default: false,
@@ -41,7 +42,7 @@ const userSchema = new Schema(
     },
     profileImage: {
       type: String,
-      default: "",
+      default: "", // WHY we use default empty string ?
     },
   },
   { timestamps: true }

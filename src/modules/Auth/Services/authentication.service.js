@@ -50,13 +50,15 @@ export const SignUp = async (req, res, next) => {
 
   //emit SendEmail event
   const confirmationLink = `${req.protocol}://${req.headers.host}/auth/confirmation/${confirmationToken}`; // this link should be a front end page link because of we don't have a front end yet we will make it a link of the api that will make the isEmailVerified flag to true
-  emitter.emit("SendEmail", {
-    to: email,
-    subject: "Welcome to Smart Note App",
-    htmlMessage: emailTemplate({
-      message: { text: "Welcome to Smart Note App", data: confirmationLink },
+  emitter.emit(
+    "SendEmail", 
+    {
+      to: email,
       subject: "Welcome to Smart Note App",
-    }),
+      htmlMessage: emailTemplate({
+        message: { text: "Welcome to Smart Note App", data: confirmationLink },
+        subject: "Welcome to Smart Note App",
+      }),
   });
 
   await userInstance.save();
@@ -167,7 +169,37 @@ export const login = async (req, res, next) => {
   return successResponse(res, data, "Login success", 200);
 };
 
+
+/**
+ * @comment to not repeat our verify token code we can call the authentication middleware before this middlware and pass the jti and the exp from it along with the user data
+ * for the refreshtoken verifying you can generate verfiyRefreshTokenMiddleware and call it after the authentication middleware then pass the jti and the exp from it 
+ * this approch will make the code more readable, maintainable and not repeated
+ */
+export const signOutService = async (req, res, next) => {
+  const {  refreshtoken } = req.headers;
+  
+  const token = req.originalToken.originalToken ;
+  const decodedData = jwt.verify(token, process.env.LOGIN_SECRET);
+
+  
+  const decodedRefreshToken = jwt.verify(
+    refreshtoken,
+    process.env.REFRESH_TOKEN
+  );
+
+  // 👌 interesting 
+  const revokedToken = await BlacklistToken.insertMany([
+    { tokenId: decodedData.jti, expiresAt: decodedData.exp },
+    { tokenId: decodedRefreshToken.jti, expiresAt: decodedRefreshToken.exp },
+  ]);
+  return successResponse(res, revokedToken, "sign out successfully", 200);
+};
+
+
 //! refreshtoken
+/**
+ * @comment if we apply the verfiyRefreshTokenMiddleware we will be able to use it here without any repeatation
+ */
 export const refreshTokenService = async (req, res, next) => {
   const { refreshtoken } = req.headers;
   const decodedData = jwt.verify(refreshtoken, process.env.REFRESH_TOKEN);
@@ -186,28 +218,6 @@ export const refreshTokenService = async (req, res, next) => {
   );
   return successResponse(res, {accessToken:accessToken}, "Token refreshed", 200);
 };
-
-
-//! refreshtoken
-export const signOutService = async (req, res, next) => {
-  const {  refreshtoken } = req.headers;
-  
-  const token = req.originalToken.originalToken ;
-  const decodedData = jwt.verify(token, process.env.LOGIN_SECRET);
-
-  
-  
-  const decodedRefreshToken = jwt.verify(
-    refreshtoken,
-    process.env.REFRESH_TOKEN
-  );
-  const revokedToken = await BlacklistToken.insertMany([
-    { tokenId: decodedData.jti, expiresAt: decodedData.exp },
-    { tokenId: decodedRefreshToken.jti, expiresAt: decodedRefreshToken.exp },
-  ]);
-  return successResponse(res, revokedToken, "sign out successfully", 200);
-};
-
 
 
 /**

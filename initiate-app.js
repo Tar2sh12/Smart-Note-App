@@ -8,13 +8,17 @@ import {
 } from "./src/utils/index.js";
 import { gracefulShutdown } from "node-schedule";
 import { routerHandler } from "./router-handler.js";
+
 export const main = () => {
 
   const app = express();
 
   config();
   
-  const port = process.env.PORT;
+  /**
+   * @comment declare the port constant before use it directly [ in line 35 in this case ]
+   */
+  const port = process.env.PORT || 3000;
 
   routerHandler(app);
 
@@ -23,7 +27,16 @@ export const main = () => {
   cronJobForRemovingEpiredTokens();
   gracefulShutdown();
 
+  /**
+   * @comment this is router will be not accessable because the app.use inside the routerHandler function will return 404 error if we send [ /  - GET ]
+   */
   app.get("/", (req, res) => res.send("Hello World!"));
+
+  /**
+   * @comment remove the commented code
+   * @comment no need for variable serverApp unless we not use it 
+   */
+
   const serverApp = app.listen(port, () =>
     console.log(`Example app listening on port ${port}!`)
   );

@@ -1,4 +1,8 @@
 import { ErrorClass } from "../utils/index.js";
+/**
+ * 
+ * @comment - express version 5 apply internal error handling like NestJs
+ */
 export const errorHandler = (API) => {
   return (req, res, next) => {
     API(req, res, next)?.catch((err) => {

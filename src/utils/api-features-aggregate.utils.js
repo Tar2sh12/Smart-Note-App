@@ -1,4 +1,3 @@
-import { parse } from "dotenv";
 
 export class ApiAggregateFeature {
   constructor(model, query, populate) {

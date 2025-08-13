@@ -13,6 +13,10 @@ export const isAuthQL = async (token) => {
     const originalToken = token.split(" ")[1];
 
     // verify token
+    /**
+     * @comment it's better to generate a tokens utils file to generate and verfiy tokens from it using functions
+     * this is help you to load the jwt module once on this module also if you need to change the way to generate or verify tokens you can do it in one place
+     */
     const data = jwt.verify(originalToken, process.env.LOGIN_SECRET);
     // check if token payload has userId
     if (!data?.userId) {

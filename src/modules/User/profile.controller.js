@@ -15,7 +15,6 @@ const UserRouter = Router();
 const { errorHandler, auth, validationMiddleware, authorizationMiddleware ,multerMiddleware} =
   Middlewares;
 import { systemRoles } from "../../utils/index.js";
-import { User } from "../../../DB/models/user.model.js";
 
 UserRouter.get(
   "/getInfo",
