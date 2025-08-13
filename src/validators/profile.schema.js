@@ -2,6 +2,7 @@
 import Joi from "joi";
 import {  systemRoles } from "../utils/index.js";
 import { generalRules } from "../utils/general-rules.utils.js";
+
 export const createUserSchema = {
   body: Joi.object({
     userName: Joi.string().required(),

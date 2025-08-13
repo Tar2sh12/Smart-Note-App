@@ -8,7 +8,7 @@ export const createNoteSchema = {
     content: Joi.string().required(),
   }),
   headers: Joi.object({
-    token: Joi.string().required(),
+    token: Joi.string().required(), // no need
     ...generalRules.headers,
   }),
 };

@@ -1,8 +1,8 @@
 import Joi from "joi";
-import { Types } from "mongoose";
+import { isValidObjectId, Types } from "mongoose";
 
 const objectIdValidation = (value, helper) => {
-  const isValid = Types.ObjectId.isValid(value);
+  const isValid = Types.ObjectId.isValid(value);   // isValidObjectId(value) => return boolean
   return isValid ? value : helper.message("Invalid ObjectId");
 };
 

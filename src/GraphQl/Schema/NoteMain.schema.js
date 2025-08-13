@@ -9,6 +9,7 @@ import {
 } from "graphql";
 import {  NoteArgs, NoteType} from "../Types/index.js";
 import { getAllNotes } from "../Resolver/index.js";
+
 export const mainSchema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: "RootQuery",

@@ -47,6 +47,7 @@ export const getInfo = async (req, res, next) => {
 export const getAllUsers = async (req, res, next) => {
   // find all users except current user
   const { authUser } = req;
+  // we can combine the both of them with if(!authUser.createdBy) because both are falsy values
   if (authUser.createdBy == null || authUser.createdBy == undefined) {
     const user = await User.find({ isMarkedAsDeleted: false }).select(
       "-password -_id -otp -updatedAt -__v"
@@ -108,7 +109,8 @@ export const deleteUser = async (req, res, next) => {
 export const updatePasswordService = async (req, res, next) => {
   const { authUser } = req;
   const { newPassword, oldPassword, confirmPassword } = req.body;
-  const token = req.originalToken.originalToken;
+
+  // from the validation middleware not from here 
   if (newPassword !== confirmPassword) {
     return next(
       new ErrorClass(

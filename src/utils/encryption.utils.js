@@ -1,5 +1,11 @@
 import CryptoJS from "crypto-js";
 
+/**
+ *
+ * @comment it's better to use the internal crypto module instead of crypto-js
+ * try to implement the Asymmetric encryption
+ */
+
 export const Encryption = async ({plain,secretKey}={})=>{
     return CryptoJS.AES.encrypt(JSON.stringify(plain), secretKey).toString();
 }

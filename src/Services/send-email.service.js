@@ -37,7 +37,10 @@ export const sendEmailService = async ({
 };
 
 export const emitter = new EventEmitter();
-// if the function got more than 3 positional arguments to convert the params into an named argumet (object) 
+// if the function got more than 3 positional arguments to convert the params into an named argumet (object)
+/** 
+ * @comment you can send object directly as  1 argument instead of spreading the argumnets and then destructure it again to construct the object
+ */
 emitter.on("SendEmail", (...args)=>{
   const {to,subject,htmlMessage,attachments} = args[0];
   sendEmailService({

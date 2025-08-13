@@ -1,6 +1,10 @@
+
+
+/**
+ * @comment this file suppose to be in src folder because if we use TS this file will need to be complied to JS
+ */
 import { json, static as st } from "express";
 import cors from "cors";
-// import * as routers from "./src/modules/index.js";
 import { globaleResponse } from "./src/middleware/index.js";
 import * as routers from "./src/modules/index.js";
 
@@ -18,18 +22,24 @@ import helmet from "helmet";
 import {rateLimit} from "express-rate-limit";
 
 
+/**
+ * @comment this is a middleware so we need to move it to the middlewares folder
+ */
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs=> 15 mins
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   message:"Too many requests, please try again later.",
 });
+
 export const routerHandler = (app) => {
   app.use(json());
   app.use(cors());
   app.use(helmet()); // Use Helmet for security headers
 
-  // Serve static files from the "src/uploads" folder via "/Assets"
+  /**
+   * @comment we can use path.resolve() instead of path.join() with these manual steps
+   */
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
@@ -40,6 +50,7 @@ export const routerHandler = (app) => {
 
   // Serve static files from the "src/uploads" folder via "/Assets"
   app.use("/Assets", st(path.join(__dirname, "src", "uploads")));
+  // app.use("/Assets", st(path.resolve('src/uploads')));
 
 
   app.use("/users", routers.UserRouter);
@@ -48,8 +59,10 @@ export const routerHandler = (app) => {
 
   //GraphQL
   app.use("/graphql", createHandler({ schema: mainSchema }));
+
   app.use("*", (req, res) => {
     res.status(404).json({ msg: "This router is not exist", status: 404 });
   });
+  
   app.use(globaleResponse);
 };

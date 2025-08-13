@@ -24,7 +24,9 @@ export const auth = () => {
     // retrieve original token after adding the prefix
     const originalToken = token.split(" ")[1];
 
+
     // verify token
+    // use the utils file to verify the token
     const data = jwt.verify(originalToken, process.env.LOGIN_SECRET);
     // check if token payload has userId
     

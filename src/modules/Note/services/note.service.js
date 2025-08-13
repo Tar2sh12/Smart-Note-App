@@ -10,7 +10,7 @@ import { geminiService } from "../../../Services/index.js";
  * @description create note 
  */
 export const createNote = async (req, res,next ) => {
-    const {authUser} = req;
+    const {authUser} = req; // to get only the _id from the authUser object => {authUser:{_id}}= req
     const {title,content}= req.body;
     const note = new Note({
         title,
@@ -53,7 +53,6 @@ export const summarizeNote = async (req, res, next) => {
  */
 export const deleteNote = async (req, res, next) => {
     const { id } = req.params;
-    const { authUser } = req;
     const note = await Note.findOneAndDelete({ _id: id, ownerId: req.authUser._id });
     if (!note) {
         return next(new ErrorClass("Note not found", 404, "Note not found"));
